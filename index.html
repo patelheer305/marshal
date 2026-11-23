@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marshal Threshar</title>
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="final.webm" as="video" type="video/webm">
+    <link rel="preload" href="Main.webp" as="image">
+    <link rel="preload" href="symbol.png" as="image">
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload Critical Font -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Defer Non-Critical CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&subset=latin,latin-ext,devanagari,gujarati&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'">
+    <!-- Inline CSS -->
+    <style>
+        /* Reset & Fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #FFFDF0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #d32f2f;
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        a {
+            color: #d32f2f;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 1rem;
+        }
+
+        /* Fixed Phone Button */
+        #fixed-phone-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #d32f2f;
+            color: #fff !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        #fixed-phone-btn i {
+            color: #fff !important;
+            transform: none;
+        }
+
+        #fixed-phone-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.1);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #fffde7;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            padding: 1rem 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links li a {
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: #d32f2f;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #b71c1c;
+        }
+
+        #language-selector {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #d32f2f;
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 60vh;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .hero video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(211, 47, 47, 0.5);
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFFDF0;
+            text-align: center;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 3rem 1rem;
+            background: #fffde7;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #d32f2f;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            decoding: async;
+        }
+
+        /* Models Section */
+        .models-section {
+            padding: 3rem 1rem;
+            background: #FFFDF0;
+            text-align: center;
+        }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            justify-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 400px;
+        }
+
+        .model-card {
+            background: #fffde7;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            min-height: 500px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .model-gallery {
+            position: relative;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 1rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            touch-action: pan-x;
+        }
+
+        .model-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .model-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid #f5f5f5;
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+            decoding: async;
+        }
+
+        .model-gallery img:hover {
+            animation-play-state: paused;
+            transform: scale(1.03);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        .model-card h3 {
+            font-size: 2rem;
+            margin: 1.5rem 0;
+            color: #d32f2f;
+        }
+
+        .model-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            background: #FFF2C2;
+        }
+
+        .model-section p {
+            font-size: 1.2rem;
+            color: #000;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-section p span.model-name {
+            color: #d32f2f;
+            font-weight: 700;
+        }
+
+        .shaft-list, .crop-list, .feature-list {
+            padding-left: 0;
+            list-style: none;
+            margin: 0.5rem 0;
+        }
+
+        .shaft-list li, .crop-list li, .feature-list li {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .feature-list li::before {
+            content: '•';
+            color: #d32f2f;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .features {
+            margin-top: 1.5rem;
+        }
+
+        .features h4 {
+            font-size: 1.5rem;
+            color: #d32f2f;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        .image-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            transform-origin: center;
+            touch-action: pinch-zoom;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #d32f2f;
+        }
+
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(211, 47, 47, 0.7);
+            color: #fff !important;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: background 0.3s ease;
+            z-index: 1001;
+        }
+
+        .modal-arrow i {
+            color: #fff !important;
+        }
+
+        .modal-arrow:hover {
+            background: #b71c1c;
+        }
+
+        .modal-arrow.left {
+            left: 10px;
+        }
+
+        .modal-arrow.right {
+            right: 10px;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            background: #fffde7;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .slider-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            margin: 0 auto;
+            max-width: 1200px;
+            min-height: 300px;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            animation: slide 45s linear infinite;
+            will-change: transform;
+            padding: 10px 0;
+            width: calc(250px * 10);
+        }
+
+        .slider-wrapper:hover {
+            animation-play-state: paused;
+        }
+
+        .testimonial-card {
+            flex: 0 0 250px;
+            margin: 0 10px;
+            background: #FFF2C2;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            padding: 1rem;
+            min-height: 250px;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            decoding: async;
+        }
+
+        .testimonial-card p {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #444;
+        }
+
+        .testimonial-card h4 {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            color: #d32f2f;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 1rem;
+            background: #FFFDF0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .contact-details {
+            background: #FFF2C2;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-details:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            background: #d32f2f;
+            color: #fff !important;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn i {
+            color: #fff !important;
+        }
+
+        .social-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .location-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .location-map-link {
+            display: flex;
+            align-items: center;
+            background: #FFFDF0;
+            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .location-map-link:hover {
+            background: #fff3f3;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .map-preview {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .map-icon {
+            width: 50px;
+            height: 50px;
+            background: #d32f2f;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff !important;
+            font-size: 1.5rem;
+        }
+
+        .map-icon i {
+            color: #fff !important;
+        }
+
+        .map-text h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #d32f2f;
+        }
+
+        .map-text p {
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .map-text p:last-child {
+            font-size: 0.9rem;
+            color: #d32f2f;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #fffde7;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fffde7;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li a {
+                font-size: 1.1rem;
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            #language-selector {
+                width: 100%;
+                margin-top: 1rem;
+                padding: 0.75rem;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-image img {
+                height: 200px;
+            }
+
+            .model-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .model-card {
+                max-width: 100%;
+            }
+
+            .contact-details {
+                padding: 1.5rem;
+            }
+
+            .social-links {
+                gap: 0.75rem;
+            }
+
+            .social-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .location-map-link {
+                padding: 0.75rem;
+            }
+
+            .map-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .map-text h4 {
+                font-size: 1.1rem;
+            }
+
+            .map-text p {
+                font-size: 0.9rem;
+            }
+
+            .slider-wrapper {
+                animation: slide 30s linear infinite;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .logo {
+                width: 120px;
+            }
+
+            .about-text h3 {
+                font-size: 1.2rem;
+            }
+
+            .about-text p {
+                font-size: 1rem;
+            }
+
+            .model-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .model-section p {
+                font-size: 1rem;
+            }
+
+            .features h4 {
+                font-size: 1.2rem;
+            }
+
+            .testimonial-card p {
+                font-size: 0.8rem;
+            }
+
+            .testimonial-card h4 {
+                font-size: 1rem;
+            }
+        }
+
+        /* Disable animations for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .slider-wrapper,
+            .model-gallery img {
+                animation: none !important;
+            }
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3F959SNCDE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3F959SNCDE');
+</script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <img src="symbol_1.png" alt="Marshal Threshar Logo" class="logo" width="150" height="50" loading="lazy" decoding="async">
+            <div class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#home" data-lang-en="Home" data-lang-hi="होम" data-lang-gu="હોમ">હોમ</a></li>
+                    <li><a href="#models" data-lang-en="Models" data-lang-hi="मॉडल्स" data-lang-gu="મોડેલ્સ">મોડેલ્સ</a></li>
+                    <li><a href="#testimonials" data-lang-en="Testimonials" data-lang-hi="प्रशंसापत्र" data-lang-gu="પ્રશંસાપત્રો">પ્રશંસાપત્રો</a></li>
+                    <li><a href="#contact" data-lang-en="Contact" data-lang-hi="संपर्क" data-lang-gu="સંપર્ક">સંપર્ક</a></li>
+                    <li><a href="/Assistant/">Assistant</a></li>
+
+                </ul>
+            </div>
+            <div class="language-container">
+                <select id="language-selector" aria-label="Select Language">
+                    <option value="en" data-lang-en="English" data-lang-hi="अंग्रेजी" data-lang-gu="અંગ્રેજી">English</option>
+                    <option value="hi" data-lang-en="Hindi" data-lang-hi="हिन्दी" data-lang-gu="હિન્દી">Hindi</option>
+                    <option value="gu" selected data-lang-en="Gujarati" data-lang-hi="गुजराती" data-lang-gu="ગુજરાતી">Gujarati</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <video autoplay muted loop playsinline poster="video-poster.webp">
+            <source src="final.webm" type="video/webm">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content"></div>
+    </section>
+
+<!-- About Section -->
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 data-lang-en="Marshal Threshar" data-lang-hi="मार्शल थ्रेसर" data-lang-gu="માર્શલ થ્રેસર">मार्शल थ्रेसर</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3 data-lang-en="A heartfelt welcome to farmer friends at Marshal Threshar." data-lang-hi="मार्शल थ्रेसर में किसान मित्रों का हार्दिक स्वागत है।" data-lang-gu="માર્શલ થ્રેસર માં ખેડૂત મિત્રો નું હાર્દિક સ્વાગત છે.">Welcome to Marshal Threshar</h3>
+                <p data-lang-en="By making several improvements and modifications in the model, design, and system of the Marshal Threshar, an ideal threshar has been developed. The reputation of Marshal Threshar has spread across every district, every taluka, and even remote villages of Gujarat and Rajasthan. As a result, the demand for Marshal Threshar continues to grow. We don’t say this — our farmer friends do: “Marshal Threshar is truly excellent. The grain doesn’t break, no trash comes through, and the grain is completely clean and pure.” That’s why farmers recognize it as the Marshal Threshar. Clean grain has now become the identity of Marshal Threshar." 
+                   data-lang-hi="मार्शल थ्रेसर के मॉडल, डिज़ाइन और सिस्टम में कई सुधार और बदलाव करके एक आदर्श थ्रेसर बनाया गया है। मार्शल थ्रेसर की खुशबू गुजरात और राजस्थान के हर जिले, हर तहसील और दूर-दराज के गांवों तक फैल चुकी है। इसलिए मार्शल थ्रेसर की मांग लगातार बढ़ रही है। हम नहीं कहते, बल्कि हमारे किसान भाई कहते हैं — “मार्शल थ्रेसर वाकई में अच्छा है। दाना टूटता नहीं, कचरा आता नहीं, और दाना एकदम साफ-सुथरा निकलता है।” इसी वजह से किसान इसे मार्शल थ्रेसर के नाम से पहचानते हैं। साफ दाना, अब मार्शल थ्रेसर की पहचान बन चुका है।" 
+                   data-lang-gu="માર્શલ થ્રેસર ના મોડલ, ડિઝાઇન અને સિસ્ટમ માં ઘણા સુધારા-વધારા અને ફેરફારો કરીને એક આદર્શ થ્રેસર તૈયાર કરવામાં આવ્યું છે. માર્શલ થ્રેસર ની સુવાસ ગુજરાત અને રાજસ્થાન ના દરેક જીલ્લાઓ, દરેક તાલુકાઓ અને દૂર-દૂર ના ગામડાઓ માં પ્રસરી ચૂકી છે. તેથી માર્શલ થ્રેસર ની માંગ સતત વધી રહી છે. અમે નહીં, પણ અમારા ખેડૂત મિત્રો કહે છે કે — “માર્શલ થ્રેસર ખરેખર સારું છે. દાણો ભાંગતો નથી, કચરો આવતો નથી, અને દાણો ખૂબ જ ચોખ્ખો અને સાફ આવે છે.” એજ કારણે ખેડૂતોએ તેને માર્શલ થ્રેસર તરીકે ઓળખ્યું છે. ચોખ્ખો દાણો એ હવે માર્શલ થ્રેસર ની ઓળખ બની ચૂકી છે."></p>
+            </div>
+            <div class="about-image">
+                <img src="Main.webp" alt="Farm" loading="eager" decoding="async" width="600" height="400">
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Models Section -->
+    <section id="models" class="models-section">
+        <div class="container">
+            <h2 data-lang-en="Threshar Models" data-lang-hi="थ्रेसर मॉडल" data-lang-gu="થ્રેસર મોડેલ્સ">हमारे थ्रेसर मॉडल</h2>
+            <div class="model-grid"></div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 data-lang-en="What Farmers Say" data-lang-hi="किसान क्या कहते हैं" data-lang-gu="ખેડૂતો શું કહે છે">किसान क्या कहते हैं</h2>
+            <div class="slider-container">
+                <div class="slider-wrapper"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 data-lang-en="Get in Touch" data-lang-hi="हमसे संपर्क करें" data-lang-gu="અમારો સંપર્ક કરો">हमसे संपर्क करें</h2>
+            <div class="contact-details">
+                <div class="social-links">
+                    <a href="https://wa.me/919824362867" class="social-btn" title="WhatsApp Us" aria-label="WhatsApp Marshal Threshar" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@marshalthresher620/videos" class="social-btn" title="Visit Our YouTube" aria-label="Visit Marshal Threshar YouTube" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/g/16KS7okYwE/?mibextid=wwXIfr" class="social-btn" title="Follow us on Facebook" aria-label="Follow Marshal Threshar on Facebook" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/tejpalpatel999?igsh=eWc2aTFrNmpmZ3cx&utm_source=qr" class="social-btn" title="Follow us on Instagram" aria-label="Follow Marshal Threshar on Instagram" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:marshal.unjha@yahoo.co.in" class="social-btn" title="Email Us" aria-label="Email Marshal Threshar">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <div class="location-box">
+                    <a href="https://www.google.com/maps/place/Marshal+Threshar+(%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B6%E0%A4%B2+%E0%A4%AB%8D%E0%A4%B0%E0%A5%87%E0%A4%B8%E0%A4%B0)+(%E0%AA%AE%E0%AA%BE%E0%AA%B0%E0%AB%8D%E0%AA%B6%E0%AA%B2+%E0%AA%AB%E0%AB%8D%E0%AA%B0%E0%A5%87%E0%AA%B8%E0%AA%B0)/@23.8618521,72.3651578,17z/data=!3m1!4b1!4m6!3m5!1s0x395c5f677d79acc3:0xc2b5f13186b56f18!8m2!3d23.8618472!4d72.3677327!16s%2Fg%2F11qkhy8f53?hl=en&entry=ttu&g_ep=EgoyMDI1MDUxMy4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="location-map-link" aria-label="Open Factory Location on Google Maps">
+                        <div class="map-preview">
+                            <div class="map-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="map-text">
+                                <h4 data-lang-en="Visit Our Factory" data-lang-hi="हमारे कारखाने का दौरा करें" data-lang-gu="અમારી ફેક્ટરીની મુલાકાત લો">Visit Our Factory</h4>
+                                <p data-lang-en="Marshal Threshar, Highway Rd, Brahmanwada, Gujarat 384215" data-lang-hi="मार्शल थ्रेसर, हाइवे रोड, ब्राह्मणवाडा, गुजरात 384215" data-lang-gu="માર્શલ થ્રેસર, હાઇવે રોડ, બ્રાહ્મણવાડા, ગુજરાત 384215">Marshal Threshar, Highway Rd, Brahmanwada, Gujarat 384215</p>
+                                <p data-lang-en="View location on Google Maps" data-lang-hi="Google Maps पर स्थान देखें" data-lang-gu="Google Maps પર સ્થાન જુઓ">View location on Google Maps</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p data-lang-en="© 2025 Marshal Threshar. All rights reserved." data-lang-hi="© 2025 मार्शल थ्रेसर। सर्वाधिकार सुरक्षित।" data-lang-gu="© 2025 માર્શલ થ્રેસર. બધા હકો આરક્ષિત.">© 2025 मार्शल थ्रेसर। सर्वाधिकार सुरक्षित।</p>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <span class="modal-close">×</span>
+        <img class="modal-content" id="modalImage" alt="Enlarged Model Image">
+        <span class="modal-arrow left" aria-label="Previous Image"><i class="fas fa-chevron-left"></i></span>
+        <span class="modal-arrow right" aria-label="Next Image"><i class="fas fa-chevron-right"></i></span>
+    </div>
+
+    <!-- Fixed Phone Button -->
+    <a href="tel:+919824362867" id="fixed-phone-btn" title="Call Us" aria-label="Call Marshal Threshar">
+        <i class="fas fa-phone"></i>
+    </a>
+
+    <script defer src="script.js"></script>
+</body>
+</html>
